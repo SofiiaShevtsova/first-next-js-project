@@ -1,4 +1,5 @@
-import React from "react";
+import { ReactElement, ReactNode } from "react";
+import { Navigation, Provider } from "@components/commons";
 import "@styles/global.css";
 
 export const metadata = {
@@ -6,14 +7,17 @@ export const metadata = {
   description: "Discover and Share AI Prompts",
 };
 
-const RootLayout = ({ children }: { children: React.ReactNode }) => {
+const RootLayout = ({ children }: { children: ReactNode }): ReactElement => {
   return (
     <html lang="en">
       <body>
         <div className="main">
           <div className="gradient"></div>
         </div>
-        <main className="app">{children}</main>
+        <main className="app">
+          <Navigation/>
+          {children}
+        </main>
       </body>
     </html>
   );
