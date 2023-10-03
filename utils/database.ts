@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 let isConnected = false;
+const mongoUri = process.env.MONGOBD_URL || ''
 
 export const connectToBD = async () => {
   mongoose.set("strictQuery", true);
@@ -9,12 +10,11 @@ export const connectToBD = async () => {
     return;
   }
   try {
-    process.env.MONGOBD_URL &&
-      (await mongoose.connect(process.env.MONGOBD_URI, {
+      await mongoose.connect(mongoUri, {
         dbName: "share_prompt",
-        useNewUrlParsel: true,
-        useUnifieldTopology: true,
-      }));
+        // useNewUrlParsel: true,
+        // useUnifieldTopology: true,
+      });
     isConnected = true;
     console.log("DB connected!");
   } catch (error) {
