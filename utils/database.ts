@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 
 let isConnected = false;
-const mongoUri = process.env.MONGOBD_URL || ''
+const mongoUri = process.env.MONGODB_URL || ''
 
-export const connectToBD = async () => {
+export const connectToDB = async () => {
   mongoose.set("strictQuery", true);
   if (isConnected) {
     console.log("DB connected!");
