@@ -11,13 +11,17 @@ const RootLayout = ({ children }: { children: ReactNode }): ReactElement => {
   return (
     <html lang="en">
       <body>
-        <div className="main">
-          <div className="gradient"></div>
-        </div>
-        <main className="app">
-          <Navigation/>
-          {children}
-        </main>
+        <Provider session={null}>
+          <>
+            <div className="main">
+              <div className="gradient"></div>
+            </div>
+            <main className="app">
+              <Navigation />
+              {children}
+            </main>
+          </>
+        </Provider>
       </body>
     </html>
   );
