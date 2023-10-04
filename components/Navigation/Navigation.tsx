@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 
-import logo from "../../public/assets/images/logo.svg";
+import logo from "@public/assets/images/logo.svg";
 
 export const Navigation = () => {
   const { data: session } = useSession();
@@ -80,7 +80,7 @@ export const Navigation = () => {
         {session?.user ? (
           <div className="flex">
             <Image
-              src={session?.user.image || logo}
+              src={ session?.user.image || logo}
               alt="profile"
               width={37}
               height={37}
