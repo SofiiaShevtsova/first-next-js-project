@@ -8,7 +8,7 @@ import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 import logo from "../../public/assets/images/logo.svg";
 
 export const Navigation = () => {
-  const isUserLoggedIn = true;
+  const { data: session } = useSession();
 
   const [provider, setProvider]: [any, Dispatch<SetStateAction<any>>] =
     useState(null);
@@ -18,11 +18,11 @@ export const Navigation = () => {
   ] = useState(false);
 
   useEffect(() => {
-    const setProviders = async () => {
+    const setNewProvider = async () => {
       const response = await getProviders();
       setProvider(response);
     };
-    setProviders();
+    setNewProvider();
   }, []);
 
   return (
@@ -38,7 +38,7 @@ export const Navigation = () => {
         <p className="logo_text">Promptopia</p>
       </Link>
       <div className="sm:flex hidden">
-        {isUserLoggedIn ? (
+        {session?.user ? (
           <div className="flex gap-3 md:gap-5">
             <Link href="/create-prompt" className="black_btn">
               Create Post
@@ -52,7 +52,7 @@ export const Navigation = () => {
             </button>
             <Link href="/profile">
               <Image
-                src={logo}
+                src={session?.user.image || logo}
                 alt="profile"
                 width={37}
                 height={37}
@@ -77,10 +77,10 @@ export const Navigation = () => {
         )}
       </div>
       <div className="sm:hidden flex relative">
-        {isUserLoggedIn ? (
+        {session?.user ? (
           <div className="flex">
             <Image
-              src={logo}
+              src={session?.user.image || logo}
               alt="profile"
               width={37}
               height={37}

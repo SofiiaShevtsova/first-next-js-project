@@ -6,7 +6,7 @@ import NextAuth, {
 } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { connectToDB } from "@utils/database";
-import User from "@models/user";
+import UserPrompt from "@models/user";
 
 declare module "next-auth" {
   interface User {
@@ -17,13 +17,21 @@ declare module "next-auth" {
     user?: User;
   }
 }
+
+const { GOOGLE_ID, GOOGLE_CLIENT_SECRET } = process.env;
+
 const handler = NextAuth({
-  providers: [GoogleProvider({ clientId: "", clientSecret: "" })],
+  providers: [
+    GoogleProvider({
+      clientId: GOOGLE_ID || "",
+      clientSecret: GOOGLE_CLIENT_SECRET || "",
+    }),
+  ],
   callbacks: {
     session: async ({ session }: { session: Session }) => {
       const user = session.user;
       if (user) {
-        const sessionUser = await User.findOne({ email: user.email });
+        const sessionUser = await UserPrompt.findOne({ email: user.email });
         user.id = sessionUser._id.toString();
       }
       return session;
@@ -36,9 +44,9 @@ const handler = NextAuth({
       const connect = async () => {
         try {
           await connectToDB();
-          const userExists = await User.findOne({ email: profile?.email });
+          const userExists = await UserPrompt.findOne({ email: profile?.email });
           if (!userExists) {
-            await User.create({
+            await UserPrompt.create({
               email: profile?.email,
               username: profile?.name?.replace(" ", "").toLowerCase(),
               image: profile?.image,

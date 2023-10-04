@@ -17,6 +17,6 @@ const UserSchema = new Schema({
   },
 });
 
-const User = models.User || model("User", UserSchema);
+const UserPrompt = models.User || model("UserPrompt", UserSchema);
 
-export default User;
+export default UserPrompt;
