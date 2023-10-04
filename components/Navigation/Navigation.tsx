@@ -84,6 +84,7 @@ export const Navigation = () => {
               alt="profile"
               width={37}
               height={37}
+              className="rounded-full"
               onClick={() => setOpenMobMenu((prev) => !prev)}
             />
             {isMobMenuOpened && (
