@@ -2,29 +2,14 @@
 
 import { useState, useEffect, ChangeEvent } from "react";
 
-import { PromptCard } from "@components/commons";
+import { PromptsList } from "@components/PromptsList/PromptsList";
 
-const PromptsList = ({
-  data,
-  handlerTagClick,
-}: {
-  data: { prompt: string; tag: string; _id: string }[];
-  handlerTagClick: Function;
-}) => {
-  return (
-    <div className="mt-16 prompt_layout">
-      {data.map((el) => (
-        <PromptCard />
-      ))}
-    </div>
-  );
-};
 
 export const Feed = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [postsList, setPostsList] = useState([]);
+  const [postsList, setPostsList]: [{}[] | null, any] = useState(null);
 
-  const handlerSearch = (event: ChangeEvent) => {
+  const handleSearch = (event: ChangeEvent) => {
     const input = event.target as HTMLInputElement;
     input && setSearchQuery(input.value);
   };
@@ -33,7 +18,7 @@ export const Feed = () => {
     const getPosts = async () => {
       const response = await fetch("/api/prompt");
       const data = await response.json();
-      setPostsList(data);
+      setPostsList([...data]);
     };
 
     getPosts();
@@ -46,11 +31,11 @@ export const Feed = () => {
           type="text"
           placeholder="Search ..."
           value={searchQuery}
-          onChange={handlerSearch}
+          onChange={handleSearch}
           className="search_input peer"
         />
       </form>
-      <PromptsList data={postsList} handlerTagClick={() => {}} />
+      {postsList && <PromptsList data={postsList} handleTagClick={() => {}} />}
     </section>
   );
 };
