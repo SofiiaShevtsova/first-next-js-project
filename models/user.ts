@@ -14,6 +14,7 @@ const UserSchema = new Schema({
   },
   image: {
     type: String,
+    require: [true, "Image must exists!"],
   },
 });
 
