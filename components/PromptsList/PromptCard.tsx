@@ -15,9 +15,9 @@ export const PromptCard = ({
   handleDelete,
 }: {
   post: any;
-  handleTagClick: Function;
-  handleEdit: Function;
-  handleDelete: Function;
+  handleTagClick?: Function;
+  handleEdit?: Function;
+  handleDelete?: Function;
 }) => {
   const [copied, setCopied] = useState("");
 
@@ -67,6 +67,8 @@ export const PromptCard = ({
       >
         {post.tag}
       </p>
+      {handleEdit && <></>}
+      {handleDelete && <></>}
     </div>
   );
 };
