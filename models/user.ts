@@ -14,9 +14,10 @@ const UserSchema = new Schema({
   },
   image: {
     type: String,
+    require: [true, "Image must exists!"],
   },
 });
 
-const Users = models.User || model("Users", UserSchema);
+const Users = models.Users || model("Users", UserSchema);
 
 export default Users;
