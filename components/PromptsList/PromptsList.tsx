@@ -18,8 +18,8 @@ export const PromptsList = ({
           key={el._id}
           post={el}
           handleTagClick={handleTagClick}
-          handleEdit={handleEdit}
-          handleDelete={handleDelete}
+          handleEdit={() => { handleEdit && handleEdit(el) }}
+          handleDelete={() => { handleDelete && handleDelete(el) }}
         />
       ))}
     </div>

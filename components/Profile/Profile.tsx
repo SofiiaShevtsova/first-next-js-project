@@ -20,7 +20,7 @@ export const Profile = ({
         <span className="blue_gradient">{name} Profile</span>
       </h1>
       <p className="desc text-left">{ desc}</p>
-      <PromptsList data={data} handleTagClick={() => {}} handleDelete={()=>{}} handleEdit={()=>{}}/>
+      <PromptsList data={data} handleTagClick={() => {}} handleDelete={handleDelete} handleEdit={handleEdit}/>
     </section>
   );
 };
