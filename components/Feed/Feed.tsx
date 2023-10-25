@@ -7,13 +7,13 @@ import { PromptsList } from "@components/PromptsList/PromptsList";
 export const Feed = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [postsList, setPostsList]: [
-    { prompt: string; tag: string; _id: string }[] | null,
+    { prompt: string; tag: string; _id: string }[] | [],
     any
-  ] = useState(null);
+  ] = useState([]);
   const [list, setList]: [
-    { prompt: string; tag: string; _id: string }[] | null,
+    { prompt: string; tag: string; _id: string }[] | [],
     any
-  ] = useState(null);
+  ] = useState([]);
 
   const handleSearch = (event: ChangeEvent) => {
     const input = event.target as HTMLInputElement;
@@ -36,7 +36,7 @@ export const Feed = () => {
   }, []);
 
   useEffect(() => {
-    if (!postsList) return;
+    if (postsList.length === 0) return;
     if (searchQuery === "") {
       setList(postsList);
     } else if (searchQuery.startsWith("#")) {
@@ -63,7 +63,7 @@ export const Feed = () => {
           className="search_input peer"
         />
       </form>
-      {list && <PromptsList data={list} handleTagClick={handleTagClick} />}
+      {list.length !== 0 && <PromptsList data={list} handleTagClick={handleTagClick} />}
     </section>
   );
 };
