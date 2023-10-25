@@ -1,4 +1,5 @@
 import { ReactElement, ReactNode } from "react";
+import { useSession } from "next-auth/react";
 import { Navigation, Provider } from "@components/commons";
 import "@styles/global.css";
 
@@ -8,10 +9,12 @@ export const metadata = {
 };
 
 const RootLayout = ({ children }: { children: ReactNode }): ReactElement => {
+    const { data: session } = useSession();
+
   return (
     <html lang="en">
       <body>
-        <Provider session={null}>
+        <Provider session={session}>
           <>
             <div className="main">
               <div className="gradient"></div>
