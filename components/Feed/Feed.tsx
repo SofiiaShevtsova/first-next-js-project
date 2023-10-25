@@ -1,17 +1,27 @@
 "use client";
 
-import { useState, useEffect, ChangeEvent } from "react";
+import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 
 import { PromptsList } from "@components/PromptsList/PromptsList";
 
-
 export const Feed = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [postsList, setPostsList]: [{}[] | null, any] = useState(null);
+  const [postsList, setPostsList]: [
+    { prompt: string; tag: string; _id: string }[] | null,
+    any
+  ] = useState(null);
+  const [list, setList]: [
+    { prompt: string; tag: string; _id: string }[] | null,
+    any
+  ] = useState(null);
 
   const handleSearch = (event: ChangeEvent) => {
     const input = event.target as HTMLInputElement;
-    input && setSearchQuery(input.value);
+    input && setSearchQuery(input.value.trim());
+  };
+
+  const handleTagClick = (tag: string) => {
+    setSearchQuery(tag);
   };
 
   useEffect(() => {
@@ -19,10 +29,28 @@ export const Feed = () => {
       const response = await fetch("/api/prompt");
       const data = await response.json();
       setPostsList([...data]);
+      setList([...data]);
     };
 
     getPosts();
   }, []);
+
+  useEffect(() => {
+    if (!postsList) return;
+    if (searchQuery === "") {
+      setList(postsList);
+    } else if (searchQuery.startsWith("#")) {
+      const newList = postsList.filter(
+        (el) => el.tag.toLowerCase().search(searchQuery.toLowerCase()) !== -1
+      );
+      setList(newList);
+    } else if (searchQuery) {
+      const newList = postsList.filter(
+        (el) => el.prompt.toLowerCase().search(searchQuery.toLowerCase()) !== -1
+      );
+      setList(newList);
+    }
+  }, [postsList, searchQuery]);
 
   return (
     <section className="feed">
@@ -35,7 +63,7 @@ export const Feed = () => {
           className="search_input peer"
         />
       </form>
-      {postsList && <PromptsList data={postsList} handleTagClick={() => {}} />}
+      {list && <PromptsList data={list} handleTagClick={handleTagClick} />}
     </section>
   );
 };
