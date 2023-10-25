@@ -1,17 +1,19 @@
+"use client"
+
 import { ReactElement, ReactNode } from "react";
 import { Navigation, Provider } from "@components/commons";
 import "@styles/global.css";
 
-export const metadata = {
-  title: "Promptopia",
-  description: "Discover and Share AI Prompts",
-};
-
 const RootLayout = ({ children }: { children: ReactNode }): ReactElement => {
+
   return (
     <html lang="en">
+      <head>
+        <title>Promptopia</title>
+        <meta name="description" content="Discover and Share AI Prompts"/>
+      </head>
       <body>
-        <Provider session={null}>
+        <Provider>
           <>
             <div className="main">
               <div className="gradient"></div>
